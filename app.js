@@ -94,22 +94,34 @@ async function sendContactForm(event) {
   const payload = Object.fromEntries(new FormData(form).entries());
   button.disabled = true;
   button.textContent = "Sending...";
+  
   try {
-    const response = await fetch("/api/contact", {
+    const response = await fetch("https://formsubmit.co/ajax/rushilardeshna@gmail.com", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        name: payload.name,
+        email: payload.email,
+        message: payload.message,
+        _captcha: false
+      })
     });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error || "Message failed");
-    toast("Message sent successfully");
-    form.reset();
+    
+    if (response.ok) {
+      toast("Message sent successfully!");
+      form.reset();
+    } else {
+      toast("Failed to send message. Please try again.");
+    }
   } catch (error) {
-    toast(error.message || "Message failed");
-  } finally {
-    button.disabled = false;
-    button.textContent = "Send Message";
+    toast("Failed to send message. Please try again.");
   }
+  
+  button.disabled = false;
+  button.textContent = "Send Message";
 }
 
 function catLink([slug, name, , icon]) {
