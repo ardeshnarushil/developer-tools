@@ -71,12 +71,16 @@
       <div class="footer-contact">
         <div>
           <h3>Need a tool?</h3>
-          <p>Send an idea or bug report. This demo form keeps the message on this page.</p>
+          <p>Send an idea or bug report. Messages go to rushilardeshna@gmail.com.</p>
         </div>
-        <form id="contactForm">
-          <input required placeholder="Your name">
-          <input required type="email" placeholder="Your email">
-          <textarea required placeholder="Your message"></textarea>
+        <form id="contactForm" action="https://formsubmit.co/rushilardeshna@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New message from Developer Tools">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://ardeshnarushil.github.io/developer-tools/#/contact">
+          <input required name="name" placeholder="Your name">
+          <input required type="email" name="email" placeholder="Your email">
+          <textarea required name="message" placeholder="Your message"></textarea>
           <button class="primary" type="submit">Send Message</button>
         </form>
       </div>

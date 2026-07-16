@@ -82,11 +82,6 @@ function init() {
     menu.hidden = !menu.hidden;
   });
   setupSearch();
-  document.querySelector("#contactForm").addEventListener("submit", (event) => {
-    event.preventDefault();
-    toast("Message saved locally. Connect a backend later to send emails.");
-    event.target.reset();
-  });
   window.addEventListener("hashchange", render);
   render();
 }
