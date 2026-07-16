@@ -82,8 +82,34 @@ function init() {
     menu.hidden = !menu.hidden;
   });
   setupSearch();
+  document.querySelector("#contactForm").addEventListener("submit", sendContactForm);
   window.addEventListener("hashchange", render);
   render();
+}
+
+async function sendContactForm(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const button = form.querySelector("button");
+  const payload = Object.fromEntries(new FormData(form).entries());
+  button.disabled = true;
+  button.textContent = "Sending...";
+  try {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Message failed");
+    toast("Message sent successfully");
+    form.reset();
+  } catch (error) {
+    toast(error.message || "Message failed");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Send Message";
+  }
 }
 
 function catLink([slug, name, , icon]) {
